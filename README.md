@@ -10,4 +10,4 @@
 ##If you’re a recruiter, automation engineer, or founder — imagine this running 24/7 nurturing your leads!
  Would love to collaborate or optimize similar or more advance flows. 💬
  
-![Captures leads from a form] (https://github.com/ashikur-rahman/n8n_workflows/blob/9aa84b57d4b5669f0d38efd400deb516db34e315/images/1.jpg)
+![Captures_leads_form](https://github.com/ashikur-rahman/n8n_workflows/blob/9aa84b57d4b5669f0d38efd400deb516db34e315/images/1.jpg)
