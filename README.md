@@ -10,4 +10,4 @@
 If you’re a recruiter, automation engineer, or founder — imagine this running 24/7 nurturing your leads!
  Would love to collaborate or optimize similar or more advance flows. 💬
  
-! (/images/1.jpg)
+![Captures leads from a form] (/images/1.jpg)
