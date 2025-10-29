@@ -1,5 +1,5 @@
 # n8n_workflows
-💡 Just finished building a no-code workflow using n8n that automatically:
+1. 💡 Just finished building a no-code workflow using n8n that automatically:
   - Captures leads from a form
   - Updates Google Sheets instantly
   - Sends custom Gmail replies (based on client budget)
@@ -13,7 +13,7 @@
 ![Captures_leads_form](https://github.com/ashikur-rahman/n8n_workflows/blob/9aa84b57d4b5669f0d38efd400deb516db34e315/images/1.jpg)
 
 
-🚀 Built an Autonomous AI Agent that Manages Google Calendar & Sheets — Powered by GPT + n8n
+2. 🚀 Built an Autonomous AI Agent that Manages Google Calendar & Sheets — Powered by GPT + n8n
 💡 I just created an AI-driven automation system using n8n that combines OpenAI GPT models, Google Calendar, and Google Sheets for full conversational task management.
 Here’s what it does 👇
 - 🧠 Uses GPT as the Chat Model (AI Agent node)
@@ -32,3 +32,13 @@ Here’s what it does 👇
 💾 Want to test or import the full flow? Comment “AI AGENT” & I’ll share the JSON version.
 
 ![Autonomous_AI_Agent](https://github.com/ashikur-rahman/n8n_workflows/blob/9aa84b57d4b5669f0d38efd400deb516db34e315/images/2.jpg)
+
+This setup combines the power of:
+- 🗓️ Schedule Trigger for timed runs
+- 📊 Google Sheets for data fetching
+- 🧮 Aggregator + Filter for smart data handling
+- 💻 Custom JS for flexible logic
+- 📧 Gmail for automated outreach
+Perfect for lead nurturing, report summaries, or client updates — no manual work needed.
+
+![Schedule_Trigger](https://github.com/ashikur-rahman/n8n_workflows/blob/e9dafaa8699223a844e544e6b8b1ecc26379c7e1/images/3.jpg)
