@@ -1,0 +1,398 @@
+{
+  "name": "RAG + Vector Databases",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1Y2Ik_g99piQE21JTlfuVtR1AnjuvRO4x",
+          "mode": "list",
+          "cachedResultName": " Books",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1Y2Ik_g99piQE21JTlfuVtR1AnjuvRO4x"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        0
+      ],
+      "id": "f0e76a4d-5923-46f9-a71d-ff391376010e",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "aAOkmN4sXUgRW13h",
+          "name": "Google Drive account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "https://drive.google.com/file/d/1NqMm5KTQKFIMe0a6AdISf9hZqjw44UkV/view?usp=drive_link",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -272,
+        0
+      ],
+      "id": "3cece0df-a383-44d4-baaa-99b2c5d55e8d",
+      "name": "__CUSTOM_API_CALL__ fileFolder",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "aAOkmN4sXUgRW13h",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -112,
+        144
+      ],
+      "id": "b75d8201-1afa-407a-b9aa-1edc520b4a67",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "OwQTTA9S2I5Ot4em",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        64,
+        144
+      ],
+      "id": "d24bdac8-a22e-46cf-aca9-043f9205c780",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "test-vector",
+          "mode": "list",
+          "cachedResultName": "test-vector"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        -80,
+        0
+      ],
+      "id": "59550282-dc8f-4478-856d-ef11ad62a1a1",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "80GJUwnu7rbmVYK0",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -448,
+        368
+      ],
+      "id": "ddf7ba2b-0bdb-4fd7-9c50-3202acbdd923",
+      "name": "When chat message received",
+      "webhookId": "41a4233e-715d-452e-85ab-aa6efcd701c3"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a helpful AI chatbot tasked with receiving customer questions and finding the most accurate answers for those questions in the connected tool which is the pinecone vector database. You will always query the pinecone vector database to retrieve answers. These answers will be information related to our company.\n\nTools\n\nPinecone vector store. Call this tool to retrieve answers to the questions customers have.\n\nInstructions\n\nPlease think through the question that a customer has, and make sure to pass the correct question to the pinecone vector store in a way that it has all the information required to properly answer that question. Make sure you set the pinecone vector store up for success by making sure it can pull the correct answer every time."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -240,
+        368
+      ],
+      "id": "d3bbce4c-1903-4d9f-9442-6d1d6198e3ea",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -384,
+        576
+      ],
+      "id": "75a1f5c8-3edd-4101-868d-57870feb824f",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "OwQTTA9S2I5Ot4em",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -240,
+        576
+      ],
+      "id": "5121d751-afa3-4962-bc95-c5f86aa134e6",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Call this tool to retrieve data from the pinecone vector store to answer customer questions about our plumbing business. The goal is to find and deliver the most accurate answer to the question a client has",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "test-vector",
+          "mode": "list",
+          "cachedResultName": "test-vector"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        -32,
+        480
+      ],
+      "id": "1a4b89c8-5ce9-4554-9d0b-73f5725fcc1a",
+      "name": "Pinecone Vector Store1",
+      "credentials": {
+        "pineconeApi": {
+          "id": "80GJUwnu7rbmVYK0",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -32,
+        656
+      ],
+      "id": "474dcf24-fec6-4edd-b1b8-581d4367bbc5",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "OwQTTA9S2I5Ot4em",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Add data into a vector Database\n",
+        "height": 320,
+        "width": 768
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -512,
+        -48
+      ],
+      "typeVersion": 1,
+      "id": "5c4071d6-14d4-4d6c-ba25-310ecdc7e018",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## ASK questions to System It will answer very specifically according to its knowledge \n",
+        "height": 496,
+        "width": 768,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -512,
+        288
+      ],
+      "typeVersion": 1,
+      "id": "16789103-8566-4551-88b7-e07438e6f3a1",
+      "name": "Sticky Note1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "__CUSTOM_API_CALL__ fileFolder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "__CUSTOM_API_CALL__ fileFolder": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "50b1326a-0d22-445b-aca2-0d2381641a57",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a67cde0d699ed1906995806d730af96a0aeb25342f36e93cbb36c8183e9c997f"
+  },
+  "id": "1OIgT8j2OCCdekyg",
+  "tags": [
+    {
+      "createdAt": "2025-10-28T07:17:29.932Z",
+      "updatedAt": "2025-10-28T07:17:29.932Z",
+      "id": "0YwaX4bdIjZOjbRA",
+      "name": "Vector Data"
+    },
+    {
+      "createdAt": "2025-10-18T18:38:56.569Z",
+      "updatedAt": "2025-10-18T18:38:56.569Z",
+      "id": "8eJ0mX8AWWZMYl9z",
+      "name": "AI Agent"
+    },
+    {
+      "createdAt": "2025-10-20T06:36:23.986Z",
+      "updatedAt": "2025-10-20T06:36:23.986Z",
+      "id": "Nd4NlH2PWTnJnGAK",
+      "name": "RAG"
+    }
+  ]
+}

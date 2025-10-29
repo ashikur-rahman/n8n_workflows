@@ -1,0 +1,402 @@
+{
+  "name": "RAG System Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        272,
+        -272
+      ],
+      "id": "3070fde3-d91d-46d6-a679-bcc0c4bb8742",
+      "name": "When chat message received",
+      "webhookId": "cde8b36b-9c39-465e-8e4d-4f0e7180c8d8"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1ipoI8EhTFBhQEB-w2B5R6Fl5090vqlrU",
+          "mode": "list",
+          "cachedResultName": "Ashikur Rahman CV.pdf",
+          "cachedResultUrl": "https://drive.google.com/file/d/1ipoI8EhTFBhQEB-w2B5R6Fl5090vqlrU/view?usp=drivesdk"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -448,
+        -272
+      ],
+      "id": "1bbddf21-0ef9-45ff-8f83-5440771982e1",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "aAOkmN4sXUgRW13h",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        -272
+      ],
+      "id": "d79a3ff0-d9a9-4fd3-ab99-c89669c8a0ff",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -128,
+        -272
+      ],
+      "id": "12ec7f19-e224-429b-8472-cedcbe46d0b2",
+      "name": "Simple Vector Store"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -128,
+        160
+      ],
+      "id": "d7794cc2-0ba9-451f-bb6a-dbba1decadcc",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "OwQTTA9S2I5Ot4em",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "textSplittingMode": "custom",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        -32,
+        -144
+      ],
+      "id": "ad1bc5ed-a04e-4f75-ad5c-0716d76ad8a7",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        -16
+      ],
+      "id": "ea92ab57-e9ce-492f-9540-da275b66cbca",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        464,
+        -272
+      ],
+      "id": "f308753a-39b9-4cc2-a40a-825a38d1667b",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        320,
+        -64
+      ],
+      "id": "b358c59c-8f8b-4d10-90a7-0258eb8a1283",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "OwQTTA9S2I5Ot4em",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        464,
+        -64
+      ],
+      "id": "867b170f-0ce5-4069-bef1-33ab97555879",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "TIf any user ask any thing about ashikur rahman, you will find the data from the attached pdf files and answer accordingly",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        608,
+        -64
+      ],
+      "id": "83968607-c06b-4fb3-930a-fab48db42a72",
+      "name": "Simple Vector Store1"
+    },
+    {
+      "parameters": {
+        "content": "### Embeddings\n\nThe Insert and Retrieve operation use the same embedding node.\n\nThis is to ensure that they are using the **exact same embeddings and settings**.\n\nDifferent embeddings might not work at all, or have unintended consequences.\n",
+        "height": 240,
+        "width": 320,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        128
+      ],
+      "typeVersion": 1,
+      "id": "4293a9df-3d3b-413d-88d2-107dffcde02d",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## When User asked question about the provided Documents\n",
+        "height": 384,
+        "width": 688
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        240,
+        -320
+      ],
+      "typeVersion": 1,
+      "id": "8d440fc3-e030-4513-8204-fd902c197ba2",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Download the data from Google Drive and extract and embade to vector \n",
+        "height": 432,
+        "width": 800,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -576,
+        -320
+      ],
+      "typeVersion": 1,
+      "id": "e0e99b44-c224-49bf-b818-9f0c8551d78d",
+      "name": "Sticky Note1"
+    }
+  ],
+  "pinData": {
+    "Extract from File": [
+      {
+        "json": {
+          "numpages": 3,
+          "numrender": 3,
+          "info": {
+            "PDFFormatVersion": "1.5",
+            "Language": null,
+            "EncryptFilterName": null,
+            "IsLinearized": false,
+            "IsAcroFormPresent": false,
+            "IsXFAPresent": false,
+            "IsCollectionPresent": false,
+            "IsSignaturesPresent": false,
+            "Producer": "cairo 1.15.12 (http://cairographics.org)",
+            "Title": "Europass",
+            "Author": "",
+            "Keywords": "",
+            "CreationDate": "D:20220508132047+02'00"
+          },
+          "text": "MD. ASHIKUR RAHMAN\nDate of birth: 29/04/1989 Nationality: Bangladeshi Gender: Male (+880) 1556601233 (+880) 1832396036\nshuvocste@gmail.com https://www.linkedin.com/in/ashikurrahmanshuvo/ Skype: shuvocste\nFlat No. B-6, Momtaj Mohol, 13/5 RND Road, Lalbagh, 1211, Dhaka, Bangladesh\nAgrani Bank Limited, Head office, 9/D Dilkusha Commercial Area, Motijheel, 1000, Dhaka, Bangladesh\n10/02/2018 – CURRENT – Dhaka, Bangladesh\nSENIOR OFFICER(ICT) – AGRANI BANK LIMITED\nI work as an application developer for the Foreign Remittance Division of Agrani Bank Limited. My\ncontribution is as follows:\nWorking in API integration with multiple exchange houses from all around the world with\nAgrani Bank Limited CBS(Core banking system) using RESTful API.\nClaim and reconciliation software for Agrani Bank Limited on government-provided incentive\n(currently 2.5%).\nRemittance Analytics system for the management team.\nDeveloped various Data converters and Reporting Systems for the Branch\nFREELANCE SOFTWARE ENGINEER – UPWORK.COM\nVisit me on upwork\nhttps://www.upwork.com/o/profiles/users/_~0110cec7419da70f09/v\n01/09/2012 – 28/02/2018 – Dhaka, Bangladesh\nLEAD DEVELOPER – INSPIRE CREATIVE IT\nI work as a full-stack (PHP, Java, Javascript, MySQL, MongoDB, Linux, Apache) software development\nfollowing Agile (Scrum, XP) Software Development Life Cycle (SDLC) processes both individually and within a\nteam using JIRA\nDuring my experience, I have built e-commerce and complex database-driven websites, and I participate in\nthe requirements analysis and implementation estimation procedures, in addition to implementing the\nsolutions and deploying them to the client's production server.\nI work with a team of developers on both simple and complex website and web application projects, assist\nin project management, and relay progress to clients.\n01/01/2012 – 30/08/2012\nSOFTWARE DEVELOPER – SAASCO COMMUNICATIONS LTD\n- Promoted to Software developer from Trainee software developer after just 2 months\n- Primary responsibilities include design and development of Attendance, Payroll, HR management\nsoftware modules which are the part of ERP system for garments industries using CodeIgniter framework\nand following modular programming concepts.\n- Worked with various attendance devices to make a web API using PHP.\n- Examples of work - http://www.hnrtrading.com/\n | http://saascogroup.com/accessories/ , http://\nsaascogroup.com/marketing_buying/ (Currently sites are not running)\nDhaka, Bangladesh\nWORK EXPERIENCE\n◦\n◦\n◦\n◦\n\n23/10/2021\nZEND CERTIFIED ENGINEER – Zend by Perforce\nField(s) of study\nPHP\nhttps://www.zend-zce.com/en/yellow-pages/ZEND033051\n01/01/2015 – 23/03/2015 – Infosys Rd, Hebbal Industrial Estate, Hebbal, Mysuru, Karnataka, India\nDEVELOPMENT AND MAINTENANCE OF JAVA-BASED APPLICATIONS – Infosys\n- Completed many solo projects within this 3 months internship program on “Development and\nMaintenance of Java-based Applications” following POJO (Plain Old Java Object), JSF and JPA with\nconsidering PMD to maintain the quality of the coding standard and writing the test cases for various types\nof business logic using JUnit test case.\n- Secured 78% of average marks in assessment of all four focus area and finish all the assessment in first\nchance.\n- Also completed basic software engineering training during this period.\nhttps://www.infosys.com/\n2007 – 27/12/2011 – Sonapur, Noakhali , Bangladesh\nB SC. ENGINEERING IN COMPUTER SCIENCE & TELECOMMUNICATION ENGINEERING – Noakh\nali Science and Technology University\nCGPA 3.71 out of 4.0 scale. Received merit-based waiver during graduation period. Position - Third.\nAssociated with NSTU-OSN (Noakhali Science and Technology University Open Source Network), and IDEA\n(Information Development and Exchange Association) work for village schools students to teach them\nabout IT.\nField(s) of study\nComputer Science & Telecommunication Engineering\nThesis: Assessing e-Readiness in NSTU: Perception towards ICT environment and ICT index measurement\n3.71 162 https://nstu.edu.bd/\n07/09/2006 – Pilkhana, Dhaka, Bangladesh\nHIGHER SECONDARY CERTIFICATE – Bir Shreshtha Noor Mohammad Rifles Public School And\nCollege\nBangla\nEnglish\nMathematics\nPhysics\nChemistry\nBiology\nField(s) of study\nScience\n4.60\nEDUCATION AND TRAINING\n◦\n◦\n◦\n◦\n◦\n◦\n◦\n◦\n◦\n\n26/06/2004 – Dhaka, Bangladesh\nSECONDARY SCHOOL CERTIFICATE – University Laboratory School and College\nBangla\nEnglish\nMathematics\nSocial Science\nReligion (lslam)\nPhysics\nChemistry\nBiology\nHigher Mathematics\nField(s) of study\nScience\n5.00\nMother tongue(s): BENGALI\nOther language(s):\nUNDERSTANDING SPEAKING WRITING\nListening Reading \nSpoken\nproduction\nSpoken\ninteraction\nENGLISH B2 C1 B2 B1 B2\nLevels: A1 and A2: Basic user; B1 and B2: Independent user; C1 and C2: Proficient user\nMicrosoft Office JIRA JSON SQL HTML Agile (Scrum) RESTful api Github Web\nDevelopment \nJavaScript MySQL Java Bootstrap JQuery Web API Postman REST API\nIntegrations \nRelational databases Unit Testing Object Oriented Programming (OOP) HTML5\nClean Code\n◦\n◦\n◦\n◦\n◦\n◦\n◦\n◦\n◦\n◦\nLANGUAGE SKILLS\nDIGITAL SKILLS",
+          "version": "5.3.31"
+        },
+        "binary": {}
+      }
+    ]
+  },
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "Simple Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Vector Store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "59a2dfc4-8984-4885-aa98-481c2a7ee712",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a67cde0d699ed1906995806d730af96a0aeb25342f36e93cbb36c8183e9c997f"
+  },
+  "id": "Vl2wGUnPYR79UFxJ",
+  "tags": [
+    {
+      "createdAt": "2025-10-18T18:38:56.569Z",
+      "updatedAt": "2025-10-18T18:38:56.569Z",
+      "id": "8eJ0mX8AWWZMYl9z",
+      "name": "AI Agent"
+    },
+    {
+      "createdAt": "2025-10-20T06:36:42.941Z",
+      "updatedAt": "2025-10-20T06:36:42.941Z",
+      "id": "HVx9BaqNQLCvFGI0",
+      "name": "Google Drive"
+    },
+    {
+      "createdAt": "2025-10-20T06:36:23.986Z",
+      "updatedAt": "2025-10-20T06:36:23.986Z",
+      "id": "Nd4NlH2PWTnJnGAK",
+      "name": "RAG"
+    }
+  ]
+}
