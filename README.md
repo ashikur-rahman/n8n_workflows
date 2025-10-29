@@ -31,4 +31,4 @@ Here’s what it does 👇
 📸 Workflow Preview:
 💾 Want to test or import the full flow? Comment “AI AGENT” & I’ll share the JSON version.
 
-![Autonomous_AI_Agent](https://github.com/ashikur-rahman/n8n_workflows/blob/9aa84b57d4b5669f0d38efd400deb516db34e315/images/2.jpg)
+![Autonomous_AI_Agent](https://github.com/ashikur-rahman/n8n_workflows/blob/a08b53138a3a7c807ff1922b9c32629ccdf94c87/images/2.jpg)
