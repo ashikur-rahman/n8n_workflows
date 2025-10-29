@@ -31,7 +31,7 @@ Here’s what it does 👇
 📸 Workflow Preview:
 💾 Want to test or import the full flow? Comment “AI AGENT” & I’ll share the JSON version.
 
-![Autonomous_AI_Agent](https://github.com/ashikur-rahman/n8n_workflows/blob/9aa84b57d4b5669f0d38efd400deb516db34e315/images/2.jpg)
+![Autonomous_AI_Agent](https://github.com/ashikur-rahman/n8n_workflows/blob/e9dafaa8699223a844e544e6b8b1ecc26379c7e1/images/2.jpg)
 
 This setup combines the power of:
 - 🗓️ Schedule Trigger for timed runs
