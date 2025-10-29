@@ -51,42 +51,43 @@ Let’s compare 🧩:
 1️⃣ Simple Vector Store (In-Memory)
 - ✅ Best for: Quick prototypes, temporary chat sessions, low-scale use
 - 💾 Storage: Data exists in memory — lost when the session ends
--⚡ Speed: Very fast for small workloads
+- ⚡ Speed: Very fast for small workloads
 - 🧩 Use Case: Testing, personal assistants, or classroom demos
--🔍 Example:
+- 🔍 Example:
  Documents are embedded into vectors → stored temporarily → queried by the AI Agent → answers are generated instantly from short-term memory.
 🧱 
--2️⃣ Permanent Vector Database (e.g., Pinecone, Weaviate, Milvus)
--✅ Best for: Enterprise-level RAG systems, long-term knowledge storage
- -💾 Storage: Persistent vector storage — survives restarts and scales easily
- -⚙️ Integration: Can handle millions of embeddings with metadata
- -📚 Use Case: Knowledge bases, customer support chatbots, or documentation assistants
--🔍 Example:
+ - 2️⃣ Permanent Vector Database (e.g., Pinecone, Weaviate, Milvus)
+ - ✅ Best for: Enterprise-level RAG systems, long-term knowledge storage
+ - 💾 Storage: Persistent vector storage — survives restarts and scales easily
+ - ⚙️ Integration: Can handle millions of embeddings with metadata
+ - 📚 Use Case: Knowledge bases, customer support chatbots, or documentation assistants
+ - 🔍 Example:
  Data from Google Drive or PDFs → converted to embeddings → stored permanently in Pinecone Vector DB → retrieved dynamically when users ask questions.
 
 🧩 RAG + Vector Databases = The Future of Contextual AI
 RAG systems bridge the gap between static LLMs and dynamic knowledge.
  Your database choice defines how smart, scalable, and persistent your AI assistant can become.
-
+![RAG](https://github.com/ashikur-rahman/n8n_workflows/blob/f73fe3157161759ccedaa9f00821c49f13faa29d/images/5.jpeg)
 
 
  💡 Understanding RAG (Retrieval-Augmented Generation) in Action!
 -🚀 Ever wondered how AI systems can retrieve information from documents and give you contextually accurate answers — almost like magic?
 This workflow visualization shows exactly how RAG (Retrieval-Augmented Generation) works under the hood:
--🔹 Step 1: Download and extract documents (e.g., from Google Drive or PDFs)
- -🔹 Step 2: Convert the text into vector embeddings using OpenAI’s model
- -🔹 Step 3: Store those vectors in a Vector Database
- -🔹 Step 4: When a user asks a question, the AI Agent retrieves the most relevant document chunks
- -🔹 Step 5: The AI combines retrieved context + the user query to generate a precise and informed answer
--💬 Why it matters:
+ - 🔹 Step 1: Download and extract documents (e.g., from Google Drive or PDFs)
+ - 🔹 Step 2: Convert the text into vector embeddings using OpenAI’s model
+ - 🔹 Step 3: Store those vectors in a Vector Database
+ - 🔹 Step 4: When a user asks a question, the AI Agent retrieves the most relevant document chunks
+ - 🔹 Step 5: The AI combines retrieved context + the user query to generate a precise and informed answer
+ - 💬 Why it matters:
  RAG is transforming how AI handles knowledge retrieval, document-based Q&A, and enterprise search — making LLMs smarter, context-aware, and grounded in real data.
-
+![RAG](https://github.com/ashikur-rahman/n8n_workflows/blob/f73fe3157161759ccedaa9f00821c49f13faa29d/images/4.jpeg)
 
  🚀 This workflow is a step toward AI-based communication intelligence — bridging productivity and personalization for businesses of any size.
 💡 Use Case:
-- ✅ Prioritize client emails by urgency
- -✅ Perform sentiment analysis on incoming messages
- -✅ Automatically log and categorize leads
- -✅ Create structured datasets for CRM or reporting
-
+ - ✅ Prioritize client emails by urgency
+ - ✅ Perform sentiment analysis on incoming messages
+ - ✅ Automatically log and categorize leads
+ - ✅ Create structured datasets for CRM or reporting
+ - 
+![RAG](https://github.com/ashikur-rahman/n8n_workflows/blob/f73fe3157161759ccedaa9f00821c49f13faa29d/images/6.jpeg)
 
